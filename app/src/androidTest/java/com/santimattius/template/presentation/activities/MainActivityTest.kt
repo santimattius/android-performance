@@ -12,6 +12,7 @@ import androidx.test.uiautomator.*
 import org.hamcrest.Matchers.notNullValue
 
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -47,6 +48,7 @@ class MainActivityTest {
 
     @Test
     @Throws(Exception::class)
+    @Ignore("Only example tests")
     fun validateIsItemPresent() {
         val list = UiScrollable(UiSelector()
             .resourceId(resourceId("home_pictures")))
