@@ -1,12 +1,12 @@
 package com.santimattius.template
 
 import android.app.Application
-import com.santimattius.template.di.AppConfiguration
+import com.santimattius.feature.di.FeatureModule
 
 class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        AppConfiguration.init(app = this)
+        FeatureModule.init(app = this)
     }
 }

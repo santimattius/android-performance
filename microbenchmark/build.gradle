@@ -1,0 +1,77 @@
+plugins {
+    id 'com.android.library'
+    id 'androidx.benchmark'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk 31
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    defaultConfig {
+        minSdk 23
+        targetSdk 31
+
+        testInstrumentationRunner 'com.santimattius.microbenchmark.TestBenchmarkRunner'
+        // Set this argument to capture profiling information, instead of measuring performance.
+        // Can be one of:
+        //   * None
+        //   * StackSampling
+        //   * MethodTracing
+        // See full descriptions of available options at: d.android.com/benchmark#profiling
+        testInstrumentationRunnerArguments["androidx.benchmark.profiling.mode"] = 'StackSampling'
+    }
+
+    testOptions {
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging true
+            }
+        }
+    }
+    
+    testBuildType = "release"
+    buildTypes {
+        debug {
+            // Since debuggable can"t be modified by gradle for library modules,
+            // it must be done in a manifest - see src/androidTest/AndroidManifest.xml
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "benchmark-proguard-rules.pro"
+        }
+        release {
+            isDefault = true
+        }
+    }
+
+}
+
+dependencies {
+    // Add your dependencies here. Note that you cannot benchmark code
+    // in an app module this way - you will need to move any code you
+    // want to benchmark to a library module:
+    // https://developer.android.com/studio/projects/android-library#Convert
+    androidTestImplementation "androidx.benchmark:benchmark-junit4:$benchmark_version"
+    androidTestImplementation project(':feature')
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    androidTestImplementation "junit:junit:$junit_version"
+
+    androidTestImplementation "androidx.test:runner:$runner_version"
+    androidTestImplementation "androidx.test:rules:$rule_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+
+    androidCore()
+    material()
+    koin()
+    testing()
+}

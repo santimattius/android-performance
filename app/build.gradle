@@ -1,17 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'jacoco'
 }
-apply from: "$rootDir/gradle/jacoco.gradle"
 
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId application_id
+        applicationId application_id + '.app'
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
         versionCode Integer.valueOf(version_code)
@@ -39,21 +36,6 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    viewBinding {
-        enabled = true
-    }
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-        unitTests.returnDefaultValues = true
-    }
-
-    tasks.withType(Test) {
-        jacoco.includeNoLocationClasses = true
-        jacoco.excludes = ['jdk.internal.*']
-    }
-
     packagingOptions {
         resources.excludes.add("**/attach_hotspot_windows.dll")
         resources.excludes.add("META-INF/*")
@@ -63,18 +45,11 @@ android {
 
 
 dependencies {
+    implementation project(':feature')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     kotlinCore()
     androidCore()
     material()
-    coroutine()
-    networking()
-    archComponent()
-    glide()
-    room()
-    koin()
     espresso()
     testing()
-    uiAutomator()
-
 }
