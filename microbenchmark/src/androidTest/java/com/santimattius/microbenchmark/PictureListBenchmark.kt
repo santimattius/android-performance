@@ -27,14 +27,7 @@ import org.junit.runner.RunWith
  */
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class RecyclerViewBenchmark {
-
-    class LazyComputedList<T>(
-        override val size: Int = Int.MAX_VALUE,
-        private inline val compute: (Int) -> T,
-    ) : AbstractList<T>() {
-        override fun get(index: Int): T = compute(index)
-    }
+class PictureListBenchmark {
 
     @get:Rule
     val benchmarkRule = BenchmarkRule()
@@ -45,13 +38,7 @@ class RecyclerViewBenchmark {
     @Before
     fun setup() {
         activityRule.scenario.onActivity { activity ->
-            // Set the RecyclerView to have a height of 1 pixel.
-            // This ensures that only one item can be displayed at once.
             activity.fragment.recyclerView.layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, 1)
-
-            // Initialize the Adapter with fake data.
-            // (Submit null first so both are synchronous for simplicity)
-            // 1st ViewHolder will be inflated and displayed by the next onActivity callback
             activity.fragment.adapter.submitList(null)
             activity.fragment.adapter.submitList(LazyComputedList {
                 stubUiPicture("Author $it")
@@ -80,11 +67,16 @@ class RecyclerViewBenchmark {
             // RecyclerView has children, its items are attached, bound, and have gone through layout.
             // Ready to benchmark!
             benchmarkRule.measureRepeated {
-                // Scroll RecyclerView by one item
-                // this will synchronously execute: attach / detach(old item) / bind / layout
                 recyclerView.scrollBy(0, recyclerView.getLastChild().height)
             }
         }
+    }
+
+    class LazyComputedList<T>(
+        override val size: Int = Int.MAX_VALUE,
+        private inline val compute: (Int) -> T,
+    ) : AbstractList<T>() {
+        override fun get(index: Int): T = compute(index)
     }
 }
 
