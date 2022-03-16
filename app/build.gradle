@@ -28,8 +28,10 @@ android {
             testCoverageEnabled true
         }
         benchmark {
+            initWith buildTypes.release
             signingConfig signingConfigs.debug
             debuggable false
+            matchingFallbacks = ['release']
         }
     }
     compileOptions {

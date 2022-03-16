@@ -1,5 +1,5 @@
 include ':app'
 rootProject.name = "android-performance"
-include ':microbenchmark'
+//include ':microbenchmark'
 include ':feature'
 include ':macrobenchmark'

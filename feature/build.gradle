@@ -8,14 +8,11 @@ plugins {
 apply from: "$rootDir/gradle/jacoco.gradle"
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
-        versionCode Integer.valueOf(version_code)
-        versionName version_name
         multiDexEnabled true
 
         testInstrumentationRunner "com.santimattius.feature.TestRunner"
@@ -26,9 +23,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
-        }
-        debug {
-            testCoverageEnabled true
         }
     }
     compileOptions {
