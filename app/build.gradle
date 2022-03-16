@@ -20,17 +20,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
-        }
-        debug {
-            testCoverageEnabled true
         }
         benchmark {
             initWith buildTypes.release
             signingConfig signingConfigs.debug
-            debuggable false
             matchingFallbacks = ['release']
         }
     }
