@@ -20,6 +20,12 @@ project.ext {
             exclude group: "androidx.test", module: "core"
         }
     }
+    androidCoreTest = Group {
+        // duplicate the dependencies of ui module here, to ensure we have the same versions
+        androidTestImplementation "androidx.appcompat:appcompat:$appcompat_version"
+        androidTestImplementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+        androidTestImplementation "androidx.recyclerview:recyclerview:$recycler_view_version"
+    }
 
     material = Group {
         implementation "com.google.android.material:material:$material_version"
