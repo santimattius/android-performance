@@ -1,68 +1,29 @@
-# Android App Template
+# Android Performance
 
 [![codecov](https://codecov.io/gh/santimattius/android-arch-template/branch/master/graph/badge.svg?token=7ITWBL56NJ)](https://codecov.io/gh/santimattius/android-arch-template) [![codecov](https://www.travis-ci.com/santimattius/android-arch-template.svg?token=P7xvicFZMo2reEHHNuJS&branch=master)](https://www.travis-ci.com/santimattius/android-arch-template)
 
-This is a template to build an Android app applying good practices and using a clean architecture, you will see that the code is super decoupled with external frameworks and even with the same Android framework, this will help you to model your domain purely in Kotlin without generating external dependencies.
+Profile your app performance
 
-<p align="center">
-  <img src="https://github.com/santimattius/android-arch-template/blob/master/screenshoot/android-clean-arch-capture.png?raw=true" alt="App Capture"/>
-</p>
+An app is considered to have poor performance if it responds slowly, shows choppy animations, freezes, or consumes too much power. Fixing performance problems involves identifying areas in which your app makes inefficient use of resources such as the CPU, memory, graphics, network, or the device battery.
 
+To find and fix these problems, use the profiling and benchmarking tools and techniques described in this topic. To learn techniques for measuring performance and examples of how to use these techniques to resolve specific problems, see Measuring performance.
 
-# Application architecture
+## Microbenchmark
 
-In the following images you will see how the app is built and what its levels of abstraction are.
+The Microbenchmark library lets you benchmark app code directly in a loop. This is designed for measuring CPU work that assesses best-case performance (warmed up Just in Time (JIT), disk accesses cached), that you might see with an inner-loop or a specific hot function. ​​The library can only measure the code you can call directly in isolation.
 
-## General
+If your app needs to process a complex data structure, or have some specific computation-heavy algorithm that is called multiple times during the application run, these may be good examples for benchmarking. You can also measure parts of your UI. For example, you can measure the cost of the RecyclerView item binding, how long it takes to inflate a layout, or how demanding the layout-and-measure pass of your View class is from a performance perspective.
 
-<p align="center">
-  <img src="https://github.com/santimattius/android-arch-template/blob/master/screenshoot/android-clean-arch-general.png?raw=true" alt="general architecture"/>
-</p>
+However, you won’t be able to measure how the benchmarked cases contribute to the overall user experience. In some scenarios, benchmarking won’t tell you if you’re improving a bottleneck like jank or application startup time. For that reason, it’s crucial to identify those bottlenecks first with the Android Profiler. After you have found the code you want to investigate and optimize, the benchmarked loop can run repeatedly, in a quick and easy fashion to create less noisy results, which lets you focus on one area of improvement.
 
-## Layers
-<p align="center">
-  <img src="https://github.com/santimattius/android-arch-template/blob/master/screenshoot/android-clean-arch-layers.png?raw=true" alt="architecture layers"/>
-</p>
+The Microbenchmark library only reports information about your application, not about the system overall. Therefore, it’s best at analyzing performance of situations specific to the app, not ones that might relate to overall system issues.
 
-## Project structure
+See more -> [Here](https://developer.android.com/studio/profile/microbenchmark-overview)
 
-<p align="left">
-  <img src="https://github.com/santimattius/android-arch-template/blob/master/screenshoot/android-clean-arch-packages.png?raw=true" alt="Project packages"/>
-</p>
+## Macrobenchmark
 
-## Dependencies
+The Macrobenchmark library measures larger end-user interactions, such as startup, interacting with the UI, and animations. Unlike the Microbenchmark library, Macrobenchmark provides direct control over the performance environment you're testing. It allows you to control compiling, starting and stopping your application to directly measure actual app startup or scrolling, instead of only the specific jitted, hot functions, with all disk accesses cached.
 
-Below you will find the libraries used to build the template and according to my criteria the most used in android development so far.
+The library injects events and monitors results externally from a test application that is built with your tests. Therefore, when writing the benchmarks, you don’t call your application code directly and instead navigate within your application as a user would.
 
-- **Koin** - dependencie provider: 
-  - https://insert-koin.io/
-- **Retrofit** - networking: 
-  - https://square.github.io/retrofit/
-- **Gson** - json parser:
-  - https://github.com/google/gson
-- **Glide** with image loader:
-  - https://github.com/bumptech/glide
-- **Kotlin coroutines**
-  - https://kotlinlang.org/docs/reference/coroutines-overview.html
-- **Mockk**, testing library
-  - https://mockk.io/  
-- **Espresso**:
-  - https://developer.android.com/training/testing/espresso
-
-## Run Espresso Tests
-
-```
-  ./gradlew connectedCheck
-```
-
-
-
-https://user-images.githubusercontent.com/22333101/143724407-72b5920c-bacd-4d1f-a1e8-c6bca8f2759a.mov
-
-
-## Referencias
-
- - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
- - [Clean Code](https://blog.cleancoder.com/)
- - [Jetpack](https://developer.android.com/jetpack?gclid=CjwKCAjw7diEBhB-EiwAskVi13xJGdb6SCxqntF3pNt6JQ4ulvEQsB9JelBK2OIG5P0cePTCcsOksBoCk1sQAvD_BwE&gclsrc=aw.ds)
- - [Android developers](https://developer.android.com/)
+See more -> [Here](https://developer.android.com/studio/profile/macrobenchmark-overview)
