@@ -21,6 +21,9 @@ The Microbenchmark library only reports information about your application, not 
 - See more -> [Here](https://developer.android.com/studio/profile/microbenchmark-overview)
 - **Example** -> [Here](https://github.com/santimattius/android-performance/blob/master/microbenchmark/src/androidTest/java/com/santimattius/microbenchmark/PictureListBenchmark.kt)
 
+https://user-images.githubusercontent.com/22333101/161398558-5376be58-376c-4667-8640-bda9b6c36561.mov
+
+
 ## Macrobenchmark
 
 The Macrobenchmark library measures larger end-user interactions, such as startup, interacting with the UI, and animations. Unlike the Microbenchmark library, Macrobenchmark provides direct control over the performance environment you're testing. It allows you to control compiling, starting and stopping your application to directly measure actual app startup or scrolling, instead of only the specific jitted, hot functions, with all disk accesses cached.
@@ -29,3 +32,7 @@ The library injects events and monitors results externally from a test applicati
 
 - See more -> [Here](https://developer.android.com/studio/profile/macrobenchmark-overview)
 - **Example** -> [Here](https://github.com/santimattius/android-performance/blob/master/macrobenchmark/src/main/java/com/santimattius/macrobenchmark/StartupBenchmark.kt)
+
+https://user-images.githubusercontent.com/22333101/161398594-2b044444-0465-4a11-bb7a-500ba0e0e7df.mov
+
+
